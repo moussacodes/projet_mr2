@@ -4,7 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
@@ -16,6 +19,13 @@ import com.mr2.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appUpdateManager: AppUpdateManager
+
+    private val rotateOpen: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim) }
+    private val rotateClose: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.rotate_close_anim) }
+    private val fromBottom: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.from_bottom) }
+    private val toBottom: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.to_bottom) }
+
+    private var clicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +63,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             )
         binding.viewPager.adapter = sectionsPagerAdapter
         binding.tabs.setupWithViewPager(findViewById(R.id.view_pager))
+        binding.floatingActionButtonEdit.setOnClickListener {
+            startActivity(Intent(this, EditActivity::class.java))
+        }
 
     }
 
@@ -68,10 +81,40 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
             R.id.floatingActionButton -> {
-                startActivity(Intent(this, EditActivity::class.java))
+                //startActivity(Intent(this, EditActivity::class.java))
+                onAddButtonClicked()
             }
         }
     }
+
+    private fun onAddButtonClicked(){
+        setVisiblility(clicked)
+        setAnimation(clicked)
+        clicked = !clicked
+    }
+
+    private fun setAnimation(clicked: Boolean) {
+        if(!clicked){
+            findViewById<FloatingActionButton>(R.id.floatingActionButtonEdit).startAnimation(fromBottom)
+            findViewById<FloatingActionButton>(R.id.floatingActionButtonVocal).startAnimation(fromBottom)
+            findViewById<FloatingActionButton>(R.id.floatingActionButton).startAnimation(rotateOpen)
+        }else{
+            findViewById<FloatingActionButton>(R.id.floatingActionButtonEdit).startAnimation(toBottom)
+            findViewById<FloatingActionButton>(R.id.floatingActionButtonVocal).startAnimation(toBottom)
+            findViewById<FloatingActionButton>(R.id.floatingActionButton).startAnimation(rotateClose)
+        }
+    }
+
+    private fun setVisiblility(clicked: Boolean) {
+        if(!clicked){
+            findViewById<FloatingActionButton>(R.id.floatingActionButtonEdit).visibility = View.VISIBLE
+            findViewById<FloatingActionButton>(R.id.floatingActionButtonVocal).visibility = View.VISIBLE
+        }else{
+            findViewById<FloatingActionButton>(R.id.floatingActionButtonEdit).visibility = View.GONE
+            findViewById<FloatingActionButton>(R.id.floatingActionButtonVocal).visibility = View.GONE
+        }
+    }
+
 
     override fun onResume() {
         appUpdateManager.appUpdateInfo
