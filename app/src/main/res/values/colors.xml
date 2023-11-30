@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorTitle">#000000</color>
+    <color name="floating_btn">#000000</color>
+    <color name="floating_btn_icon">#ffffff</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="color_accent">#000000</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+    <color name="ic_launcher_background">#3DDC84</color>
     <color name="background">#EFEEEE</color>
     <color name="status_bar_scrim">@color/background</color>
     <color name="nav_bar_scrim">@color/background</color>

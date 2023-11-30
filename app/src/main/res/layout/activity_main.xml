@@ -36,7 +36,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="15dp"
-        android:tint="@color/white"
+        android:tint="@color/floating_btn_icon"
         android:clickable="true"
         android:focusable="true"
         android:visibility="gone"
@@ -52,7 +52,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="15dp"
         android:focusable="true"
-        android:tint="@color/white"
+        android:tint="@color/floating_btn_icon"
         android:clickable="true"
         android:visibility="gone"
         android:contentDescription="@string/add_notes"
@@ -67,6 +67,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
+       android:tint="@color/floating_btn_icon"
         android:contentDescription="@string/add_notes"
         android:src="@drawable/ic_round_add" />
 

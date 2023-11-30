@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">MR2</string>
-    <string name="tab_all">All</string>
-    <string name="tab_personal">Personal</string>
-    <string name="tab_work">Work</string>
-    <string name="tab_study">Study</string>
+    <string name="tab_all">Notes</string>
+    <string name="tab_personal">Voice</string>
+    <string name="tab_work">Todo</string>
+    <string name="tab_study">Passwords</string>
     <string name="note">Note</string>
     <string name="note_is_empty">Note is empty</string>
     <string name="save">Save</string>
@@ -25,8 +25,13 @@
     <string name="custom_model_no">No</string>
 
     <string-array name="labels">
-        <item>Personal</item>
-        <item>Work</item>
-        <item>Study</item>
+        <item>Voice</item>
+        <item>Todo</item>
+        <item>Passwords</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_audio_recording">AudioRecordingActivity</string>
+    <string name="start">start</string>
+    <string name="stop">stop</string>
 </resources>

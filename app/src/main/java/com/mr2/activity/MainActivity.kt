@@ -1,5 +1,6 @@
 package com.mr2.activity
 
+
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -7,12 +8,17 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.mr2.R
+import com.mr2.activity.AudioRecordingActivity
+import com.mr2.activity.EditActivity
+
 import com.mr2.adapter.SectionsPagerAdapter
 import com.mr2.databinding.ActivityMainBinding
 
@@ -65,6 +71,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.tabs.setupWithViewPager(findViewById(R.id.view_pager))
         binding.floatingActionButtonEdit.setOnClickListener {
             startActivity(Intent(this, EditActivity::class.java))
+        }
+        binding.floatingActionButtonVocal.setOnClickListener {
+            startActivity(Intent(this, AudioRecordingActivity::class.java))
         }
 
     }
@@ -139,4 +148,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             // TODO: do something in here if in-app updates failure
         }
     }
+
+
+    /*private fun replaceFragment(fragment: Fragment, isTransition: Boolean?) {
+
+        val fragmentTransition = supportFragmentManager.beginTransaction()
+
+        if (isTransition == true) {
+            fragmentTransition.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+        }
+        fragmentTransition.replace(R.id.flFragmenet, fragment)
+        fragmentTransition.commit()
+    }*/
 }

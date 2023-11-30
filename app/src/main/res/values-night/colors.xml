@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_accent">#FFFFFF</color>
+    <color name="background">#19191E</color>
+    <color name="colorTitle">#FFFFFF</color>
+    <color name="colorGrey">#D1D1D1</color>
+    <color name="colorBgBtn">#FFFFFF</color>
+    <color name="floating_btn">#ffffff</color>
+    <color name="floating_btn_icon">#000000</color>
+</resources>

@@ -54,6 +54,7 @@ android {
     buildFeatures {
         dataBinding = true
         viewBinding = true
+        compose = false
     }
 
     packaging {
@@ -61,18 +62,24 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.8.1")
+
 
 
     // awesome dialog
     //implementation ("com.github.chnouman:AwesomeDialog:1.0.5")
     implementation ("com.google.android.play:core:1.10.3")
+
 
 
     testImplementation("junit:junit:4.13.2")
@@ -88,6 +95,7 @@ dependencies {
 
     //live data and lifecycle
     implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     //noinspection LifecycleAnnotationProcessorWithJava8
     annotationProcessor ("androidx.lifecycle:lifecycle-compiler:2.6.2")
 
@@ -96,6 +104,7 @@ dependencies {
     implementation ("androidx.room:room-ktx:2.6.0")
 
     implementation ("androidx.legacy:legacy-support-v4:1.0.0")
+
     kapt ("androidx.room:room-compiler:2.6.0")
     androidTestImplementation ("androidx.room:room-testing:2.6.0")
 
