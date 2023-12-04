@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.mr2.R
 import com.mr2.fragment.AllNotesFragment
-import com.mr2.fragment.PersonalNotesFragment
+import com.mr2.fragment.VocalFragment
 import com.mr2.fragment.StudyNotesFragment
 import com.mr2.fragment.WorkNotesFragment
 
@@ -23,7 +23,7 @@ class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
             0 -> fragment =
                 AllNotesFragment()
             1 -> fragment =
-                PersonalNotesFragment()
+                VocalFragment()
             2 -> fragment =
                 WorkNotesFragment()
             3 -> fragment =

@@ -34,4 +34,8 @@
     <string name="title_activity_audio_recording">AudioRecordingActivity</string>
     <string name="start">start</string>
     <string name="stop">stop</string>
+    <string name="cancel">Cancel</string>
+    <string name="save_the_vocal">Save the vocal</string>
+    <string name="your_vocal_title">your vocal title...</string>
+    <string name="time">00:00</string>
 </resources>

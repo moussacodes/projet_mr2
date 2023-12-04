@@ -1,183 +1,316 @@
-/*package com.mr2.activity
+package com.mr2.activity
 
-import android.app.Activity
-import android.content.Intent
+
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
-import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import android.Manifest
+import android.app.Dialog
 import android.content.ContentValues
-import android.media.MediaRecorder
-import android.os.Environment
-import android.provider.MediaStore
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.media.MediaPlayer
 import com.mr2.R
 import com.mr2.databinding.ActivityAudioRecordingBinding
-import com.mr2.databinding.ActivityMainBinding
 import com.mr2.method.DataHelper
+import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.Timer
-import java.util.TimerTask
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import android.media.MediaRecorder
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.os.Handler
+import android.transition.TransitionManager
+import android.util.Log
+import androidx.lifecycle.lifecycleScope
+import android.os.SystemClock
+import android.provider.MediaStore
+import android.view.Window
+import android.widget.Button
+import android.widget.EditText
+import android.widget.SeekBar
+import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import com.mr2.databinding.ActivityDetailNoteBinding
+import com.mr2.entity.Note
+import com.mr2.entity.Vocal
+import com.mr2.method.DateChange
+import com.mr2.viewModel.NotesViewModel
+import com.mr2.viewModel.VocalViewModel
+import java.io.File
+import java.io.IOException
 
 class AudioRecordingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAudioRecordingBinding
-    lateinit var dataHelper: DataHelper
-    lateinit var mr: MediaRecorder
-    private val timer = Timer()
+    private lateinit var vocalViewModel: VocalViewModel
+    private val recordingFilePath: String by lazy {
+        val currentTime = System.currentTimeMillis()
+        "${externalCacheDir?.absolutePath}/recording${currentTime}.m4a"
+    }
+    private val dateChange = DateChange()
 
+
+    private var length: String = "";
+    private var mRecorder: MediaRecorder? = null
+    private var mPlayer: MediaPlayer? = null
+    private var fileName: String? = null
+    private var lastProgress = 0
+    private val mHandler = Handler()
+    private val RECORD_AUDIO_REQUEST_CODE = 101
+    private var isPlaying = false
+
+     @RequiresApi(Build.VERSION_CODES.O)
+     fun onClick(view: View?) {
+        when (view!!.id) {
+            R.id.imgBtRecord -> {
+                prepareRecording()
+                startRecording()
+            }
+
+            R.id.imgBtStop -> {
+                prepareStop()
+                stopRecording()
+            }
+
+            /*R.id.imgViewPlay -> {
+                if (!isPlaying && fileName != null) {
+                    isPlaying = true
+                    startPlaying()
+                } else {
+                    isPlaying = false
+                    stopPlaying()
+                }
+            }*/
+
+        }
+    }
+    private fun initViewModel() {
+        vocalViewModel = ViewModelProvider(this).get(VocalViewModel::class.java)
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAudioRecordingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        dataHelper = DataHelper(applicationContext)
-
-        val path = Environment.getExternalStorageDirectory().toString()+"/voice_note.3gp"
-        mr = MediaRecorder()
-
-
+        initViewModel()
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE),111)
         }
-        binding.audioStart.setOnClickListener{
-            startStopAction()
-            binding.audioStart.visibility = View.GONE
-            binding.audioPause.visibility = View.VISIBLE
-            runOnUiThread {
-                // UI-related operations
-                try {
-                    mr.setAudioSource(MediaRecorder.AudioSource.MIC)
-                    mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-                    mr.setAudioEncoder(MediaRecorder.AudioEncoder.AAC) // or AMR_NB
-                    mr.setOutputFile(path)
-                    mr.prepare()
-                    mr.start()
-                } catch (e: Exception) {
-                    // Handle exceptions, such as IOException or IllegalStateException
-                    e.printStackTrace()
+
+
+        binding.imgBtRecord.setOnClickListener {
+            prepareRecording()
+            startRecording()
+        }
+
+        binding.imgBtStop.setOnClickListener {
+            prepareStop()
+            stopRecording()
+        }
+
+        binding.imgViewPlay.setOnClickListener{
+            if (!isPlaying && recordingFilePath != null) {
+                isPlaying = true
+                startPlaying()
+            } else {
+                isPlaying = false
+                stopPlaying()
+            }
+        }
+    }
+
+    private fun stopPlaying() {
+        try {
+            mPlayer!!.release()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        mPlayer = null
+        //showing the play button
+        binding.imgViewPlay.setImageResource(R.drawable.play_24)
+        binding.chronometer.stop()
+    }
+    private fun startPlaying() {
+        mPlayer = MediaPlayer()
+        try {
+            mPlayer!!.setDataSource(recordingFilePath)
+            mPlayer!!.prepare()
+            mPlayer!!.start()
+        } catch (e: IOException) {
+            Log.e("LOG_TAG", "prepare() failed")
+        }
+
+        //making the imageView pause button
+        binding.imgViewPlay.setImageResource(R.drawable.pause_24)
+
+        binding.seekBar.progress = lastProgress
+        mPlayer!!.seekTo(lastProgress)
+        binding.seekBar.max = mPlayer!!.duration
+        seekBarUpdate()
+        binding.chronometer.start()
+
+        mPlayer!!.setOnCompletionListener(MediaPlayer.OnCompletionListener {
+            binding.imgViewPlay.setImageResource(R.drawable.play_24)
+            isPlaying = false
+            binding.chronometer.stop()
+            binding.chronometer.base = SystemClock.elapsedRealtime()
+            mPlayer!!.seekTo(0)
+        })
+
+        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                if (mPlayer != null && fromUser) {
+                    mPlayer!!.seekTo(progress)
+                    binding.chronometer.base = SystemClock.elapsedRealtime() - mPlayer!!.currentPosition
+                    lastProgress = progress
                 }
             }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        })
+    }
+    private fun prepareStop() {
+        TransitionManager.beginDelayedTransition(binding.llRecorder)
+        binding.imgBtRecord.visibility = View.VISIBLE
+        binding.imgBtStop.visibility = View.GONE
+        binding.llPlay.visibility = View.VISIBLE
+    }
+
+
+    private fun prepareRecording() {
+        TransitionManager.beginDelayedTransition(binding.llRecorder)
+        binding.imgBtRecord.visibility = View.GONE
+        binding.imgBtStop.visibility = View.VISIBLE
+        binding.llPlay.visibility = View.GONE
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun startRecording() {
+
+        mRecorder = MediaRecorder()
+        mRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
+        mRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+        mRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+        mRecorder!!.setAudioEncodingBitRate(128000) // Adjust the bit rate as needed
+        mRecorder!!.setAudioSamplingRate(44100)
+        mRecorder!!.setOutputFile(recordingFilePath)
+
+
+        try {
+            mRecorder!!.prepare()
+            mRecorder!!.start()
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
 
-        binding.audioPause.setOnClickListener{
-                mr.stop()
-                resetAction()
-                binding.audioPause.visibility = View.GONE
-                binding.audioStart.visibility = View.VISIBLE
-                startActivity(Intent(this, MainActivity::class.java))
 
 
-        }
 
-        if(dataHelper.timerCounting())
-        {
-            startTimer()
-        }
-        else
-        {
-            stopTimer()
-            if(dataHelper.startTime() != null && dataHelper.stopTime() != null)
-            {
-                val time = Date().time - calcRestartTime().time
-                binding.timerView.text = timeStringFromLong(time)
+
+        lastProgress = 0
+        binding.seekBar.progress = 0
+        stopPlaying()
+        // making the imageView a stop button starting the chronometer
+        binding.chronometer.base = SystemClock.elapsedRealtime()
+        binding.chronometer.start()
+    }
+
+    private fun showSavingDialogBox(){
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.save_vocal_dialog)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val editText: EditText = dialog.findViewById(R.id.vocal_title_input)
+        val saveBtn: Button = dialog.findViewById(R.id.saveBtn)
+        val cancelBtn: Button = dialog.findViewById(R.id.cancelBtn)
+        val date = dateChange.getToday()
+        val time = dateChange.getTime()
+
+
+        //vocalViewModel.insertVocal()
+
+
+        saveBtn.setOnClickListener {
+            if(!editText.text.isEmpty()){
+                vocalViewModel.insertVocal(
+                    Vocal(
+                        title = editText.text.toString(),
+                        path = recordingFilePath,
+                        length = length,
+                        date = date,
+                        time = time,
+                    )
+                )
             }
+            dialog.dismiss()
         }
 
-        timer.scheduleAtFixedRate(TimeTask(), 0, 500)
-
-    }
-
-    private inner class TimeTask : TimerTask() {
-        override fun run() {
-            // This code will run on a new thread
-            if (dataHelper.timerCounting()) {
-                val time = Date().time - dataHelper.startTime()!!.time
-
-                // Use runOnUiThread to update UI components on the main thread
-                    binding.timerView.text = timeStringFromLong(time)
-
-            }
+        cancelBtn.setOnClickListener {
+            dialog.dismiss()
         }
+        dialog.show()
     }
 
 
-    private fun resetAction()
-    {
-        dataHelper.setStopTime(null)
-        dataHelper.setStartTime(null)
-        stopTimer()
-        binding.timerView.text = timeStringFromLong(0)
-    }
-
-    private fun stopTimer()
-    {
-        dataHelper.setTimerCounting(false)
-        binding.audioStart.text = getString(R.string.start)
-    }
-
-    private fun startTimer()
-    {
-        dataHelper.setTimerCounting(true)
-        binding.audioStart.text = getString(R.string.stop)
-    }
-
-    private fun startStopAction()
-    {
-        if(dataHelper.timerCounting())
-        {
-            dataHelper.setStopTime(Date())
-            stopTimer()
+    private fun stopRecording() {
+        try {
+            mRecorder?.stop()
+            mRecorder?.release()
+            binding.chronometer.stop()
+            binding.chronometer.base = SystemClock.elapsedRealtime()
+            length = binding.chronometer.text.toString()
+            showSavingDialogBox()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        else
-        {
-            if(dataHelper.stopTime() != null)
-            {
-                dataHelper.setStartTime(calcRestartTime())
-                dataHelper.setStopTime(null)
-            }
-            else
-            {
-                dataHelper.setStartTime(Date())
-            }
-            startTimer()
+        mRecorder = null
+        // Stopping the chronometer
+
+        // Showing the play button
+        Toast.makeText(this, "Recording saved successfully.", Toast.LENGTH_SHORT).show()
+    }
+
+
+
+    private var runnable: Runnable = Runnable { seekBarUpdate() }
+
+    private fun seekBarUpdate() {
+        if (mPlayer != null) {
+            val mCurrentPosition = mPlayer!!.currentPosition
+            binding.seekBar.progress = mCurrentPosition
+            lastProgress = mCurrentPosition
+        }
+        mHandler.postDelayed(runnable, 100)
+    }
+    private fun getPermissionToRecordAudio() {
+        // 1) Use the support library version ContextCompat.checkSelfPermission(...) to avoid checking the build version since Context.checkSelfPermission(...) is only available in Marshmallow
+        // 2) Always check for permission (even if permission has already been granted) since the user can revoke permissions at any time through Settings
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf( Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE), RECORD_AUDIO_REQUEST_CODE)
         }
     }
 
-    private fun calcRestartTime(): Date
-    {
-        val diff = dataHelper.startTime()!!.time - dataHelper.stopTime()!!.time
-        return Date(System.currentTimeMillis() + diff)
-    }
-
-    private fun timeStringFromLong(ms: Long): String
-    {
-        val seconds = (ms / 1000) % 60
-        val minutes = (ms / (1000 * 60) % 60)
-        val hours = (ms / (1000 * 60 * 60) % 24)
-        return makeTimeString(hours, minutes, seconds)
-    }
-
-    private fun makeTimeString(hours: Long, minutes: Long, seconds: Long): String
-    {
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
-    }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 999 && resultCode == Activity.RESULT_OK) {
-            // TODO: do something in here if in-app updates success
-        } else {
-            // TODO: do something in here if in-app updates failure
-        }
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mr.release()
-    }
 
+    // Callback with the request from calling requestPermissions(...)
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -189,198 +322,5 @@ class AudioRecordingActivity : AppCompatActivity() {
         }
     }
 
-}*/
 
-
-package com.mr2.activity
-
-import android.app.Activity
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Bundle
-import android.view.View
-import androidx.activity.ComponentActivity
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import android.Manifest
-import android.os.Environment
-import android.provider.MediaStore
-import com.mr2.R
-import com.mr2.activity.MainActivity
-import com.mr2.databinding.ActivityAudioRecordingBinding
-import com.mr2.databinding.ActivityMainBinding
-import com.mr2.method.DataHelper
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.util.Date
-import java.util.Timer
-import java.util.TimerTask
-import android.media.MediaRecorder
-import kotlinx.coroutines.withContext
-
-class AudioRecordingActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityAudioRecordingBinding
-    lateinit var dataHelper: DataHelper
-    lateinit var mr: MediaRecorder
-    private val timer = Timer()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityAudioRecordingBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        dataHelper = DataHelper(applicationContext)
-
-        val path = Environment.getExternalStorageDirectory().toString() + "/voice_note.3gp"
-        mr = MediaRecorder()
-
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.RECORD_AUDIO
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    Manifest.permission.RECORD_AUDIO
-
-                ), 111
-            )
-        }
-        //Manifest.permission.WRITE_EXTERNAL_STORAGE
-        binding.audioStart.setOnClickListener {
-            startStopAction()
-            binding.audioStart.visibility = View.GONE
-            binding.audioPause.visibility = View.VISIBLE
-            GlobalScope.launch(Dispatchers.IO) {
-                // Background thread for media recording
-                try {
-                    mr.setAudioSource(MediaRecorder.AudioSource.MIC)
-                    mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-                    mr.setAudioEncoder(MediaRecorder.AudioEncoder.AAC) // or AMR_NB
-                    mr.setOutputFile(path)
-                    mr.prepare()
-                    mr.start()
-                } catch (e: Exception) {
-                    // Handle exceptions, such as IOException or IllegalStateException
-                    e.printStackTrace()
-                }
-            }
-        }
-
-        binding.audioPause.setOnClickListener {
-            GlobalScope.launch(Dispatchers.IO) {
-                mr.stop()
-                withContext(Dispatchers.Main) {
-                    resetAction()
-                    binding.audioPause.visibility = View.GONE
-                    binding.audioStart.visibility = View.VISIBLE
-                    startActivity(Intent(this@AudioRecordingActivity, MainActivity::class.java))
-                }
-            }
-
-        }
-
-        if (dataHelper.timerCounting()) {
-            startTimer()
-        } else {
-            stopTimer()
-            if (dataHelper.startTime() != null && dataHelper.stopTime() != null) {
-                val time = Date().time - calcRestartTime().time
-                binding.timerView.text = timeStringFromLong(time)
-            }
-        }
-
-        timer.scheduleAtFixedRate(TimeTask(), 0, 500)
-    }
-
-    private inner class TimeTask : TimerTask() {
-        override fun run() {
-            // This code will run on a new thread
-            if (dataHelper.timerCounting()) {
-                val time = Date().time - dataHelper.startTime()!!.time
-
-                // Use runOnUiThread to update UI components on the main thread
-                runOnUiThread {
-                    binding.timerView.text = timeStringFromLong(time)
-                }
-            }
-        }
-    }
-
-    private fun resetAction() {
-        dataHelper.setStopTime(null)
-        dataHelper.setStartTime(null)
-        stopTimer()
-        binding.timerView.text = timeStringFromLong(0)
-    }
-
-    private fun stopTimer() {
-        dataHelper.setTimerCounting(false)
-        binding.audioStart.text = getString(R.string.start)
-    }
-
-    private fun startTimer() {
-        dataHelper.setTimerCounting(true)
-        binding.audioStart.text = getString(R.string.stop)
-    }
-
-    private fun startStopAction() {
-        if (dataHelper.timerCounting()) {
-            dataHelper.setStopTime(Date())
-            stopTimer()
-        } else {
-            if (dataHelper.stopTime() != null) {
-                dataHelper.setStartTime(calcRestartTime())
-                dataHelper.setStopTime(null)
-            } else {
-                dataHelper.setStartTime(Date())
-            }
-            startTimer()
-        }
-    }
-
-    private fun calcRestartTime(): Date {
-        val diff = dataHelper.startTime()!!.time - dataHelper.stopTime()!!.time
-        return Date(System.currentTimeMillis() + diff)
-    }
-
-    private fun timeStringFromLong(ms: Long): String {
-        val seconds = (ms / 1000) % 60
-        val minutes = (ms / (1000 * 60) % 60)
-        val hours = (ms / (1000 * 60 * 60) % 24)
-        return makeTimeString(hours, minutes, seconds)
-    }
-
-    private fun makeTimeString(hours: Long, minutes: Long, seconds: Long): String {
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 999 && resultCode == Activity.RESULT_OK) {
-            // TODO: do something in here if in-app updates success
-        } else {
-            // TODO: do something in here if in-app updates failure
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        GlobalScope.launch(Dispatchers.IO) {
-            mr.release()
-        }
-        timer.cancel()
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode != 111 || grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-    }
 }

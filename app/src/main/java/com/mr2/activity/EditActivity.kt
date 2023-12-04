@@ -57,10 +57,10 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
 
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-            binding.spLabel.adapter = adapter
+            //binding.spLabel.adapter = adapter
 
-            val spinnerPosition = adapter.getPosition(compareValue)
-            binding.spLabel.setSelection(spinnerPosition)
+            /*val spinnerPosition = adapter.getPosition(compareValue)
+            binding.spLabel.setSelection(spinnerPosition)*/
 
         }
 
@@ -118,7 +118,7 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btn_save -> {
                 val title = binding.editTextTitle.text.toString()
                 val body = binding.editTextBody.text.toString()
-                val label = binding.spLabel.selectedItem.toString()
+                //val label = binding.spLabel.selectedItem.toString()
                 val date = dateChange.getToday()
                 val time = dateChange.getTime()
 
@@ -131,7 +131,7 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
                             Note(
                                 id = note.id,
                                 title = title,
-                                label = label,
+                                label = "note",
                                 date = note.date,
                                 time = note.time,
                                 updatedDate = date,
@@ -143,7 +143,7 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
                         notesViewModel.insertNote(
                             Note(
                                 title = title,
-                                label = label,
+                                label = "note",
                                 date = date,
                                 time = time,
                                 body = body

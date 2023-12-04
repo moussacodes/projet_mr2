@@ -52,12 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ncv_title"
 >
 
-        <Spinner
-            android:padding="20dp"
-            android:id="@+id/sp_label"
-            android:entries="@array/labels"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+
 
     </androidx.cardview.widget.CardView>
 
@@ -76,7 +71,7 @@
         <EditText
             android:id="@+id/edit_text_body"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="400sp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="16dp"
