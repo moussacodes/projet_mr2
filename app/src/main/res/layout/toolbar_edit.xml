@@ -31,11 +31,13 @@
             app:layout_constraintStart_toEndOf="@+id/nib_back"
             app:layout_constraintTop_toTopOf="@+id/nib_back" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_save"
             android:layout_width="99dp"
             android:layout_height="50dp"
             android:text="@string/save"
+            android:src="@drawable/save_24"
+            android:background="@color/white"
             android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="@+id/nib_back"
             app:layout_constraintEnd_toEndOf="parent"

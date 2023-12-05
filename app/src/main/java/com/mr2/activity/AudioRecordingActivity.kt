@@ -216,10 +216,6 @@ class AudioRecordingActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
-
-
-
-
         lastProgress = 0
         binding.seekBar.progress = 0
         stopPlaying()

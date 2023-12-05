@@ -19,7 +19,7 @@ interface NoteDao {
     fun getAll() : List<Note>
 
     @Query("SELECT * FROM notes WHERE id = :id")
-    fun getById(id: Int) : List<Note>
+    fun getById(id: Int) : Note
 
     @Query("SELECT * FROM notes WHERE title LIKE :search ORDER BY id DESC")
     fun getByTitle(search: String?): List<Note>

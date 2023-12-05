@@ -40,27 +40,13 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
         if (intent.getParcelableExtra<Note>(editNoteExtra) != null) {
 
             isUpdate = true
-            binding.buttonDelete.visibility = View.VISIBLE
 
             note = intent.getParcelableExtra(editNoteExtra)!!
             binding.editTextTitle.setText(note.title)
             binding.editTextBody.setText(note.body)
             binding.editTextTitle.setSelection(note.title.length)
 
-            //set spinner position
-            val compareValue = note.label
-            val adapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.labels,
-                android.R.layout.simple_spinner_item
-            )
 
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-            //binding.spLabel.adapter = adapter
-
-            /*val spinnerPosition = adapter.getPosition(compareValue)
-            binding.spLabel.setSelection(spinnerPosition)*/
 
         }
 
@@ -74,7 +60,6 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
     private fun initListener() {
         binding.toolbar.nibBack.setOnClickListener(this)
         binding.toolbar.btnSave.setOnClickListener(this)
-        binding.buttonDelete.setOnClickListener(this)
     }
 
     private fun deleteNote(note: Note) {
@@ -105,7 +90,6 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
                 buttonBackgroundColor = R.drawable.bg_btn_black,
                 textColor = ContextCompat.getColor(this, R.color.background)
             ) {
-
             }*/
 
     }
@@ -118,7 +102,6 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btn_save -> {
                 val title = binding.editTextTitle.text.toString()
                 val body = binding.editTextBody.text.toString()
-                //val label = binding.spLabel.selectedItem.toString()
                 val date = dateChange.getToday()
                 val time = dateChange.getTime()
 
@@ -131,7 +114,6 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
                             Note(
                                 id = note.id,
                                 title = title,
-                                label = "note",
                                 date = note.date,
                                 time = note.time,
                                 updatedDate = date,
@@ -143,8 +125,7 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
                         notesViewModel.insertNote(
                             Note(
                                 title = title,
-                                label = "note",
-                                date = date,
+                                 date = date,
                                 time = time,
                                 body = body
                             )
@@ -159,9 +140,7 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
             }
-            R.id.button_delete -> {
-                showDialog()
-            }
+
         }
     }
 }

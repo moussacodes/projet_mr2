@@ -79,7 +79,13 @@ dependencies {
     // awesome dialog
     //implementation ("com.github.chnouman:AwesomeDialog:1.0.5")
     implementation ("com.google.android.play:core:1.10.3")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
+    implementation("androidx.annotation:annotation:1.6.0")
 
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
 
 
     testImplementation("junit:junit:4.13.2")

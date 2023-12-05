@@ -43,6 +43,9 @@ class NotesViewModel(application: Application) : AndroidViewModel(application) {
         dao.insert(note)
     }
 
+    fun getById(id: Int): Note {
+        return dao.getById(id)
+    }
     fun updateNote(note: Note){
         dao.update(note)
     }

@@ -54,7 +54,6 @@ class AllNotesFragment : Fragment() {
                 intent.putExtra(DetailNoteActivity().editNoteExtra, note)
                 startActivity(intent)
             }
-
         })
 
     }
@@ -72,7 +71,6 @@ class AllNotesFragment : Fragment() {
 
             listNoteAdapter.setData(notes)
         })
-
     }
 
     private fun initListener(){

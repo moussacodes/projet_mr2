@@ -8,7 +8,7 @@
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="ic_launcher_background">#3DDC84</color>
-    <color name="background">#EFEEEE</color>
+    <color name="background">#ffffff</color>
     <color name="status_bar_scrim">@color/background</color>
     <color name="nav_bar_scrim">@color/background</color>
     <color name="colorGrey">#D1D1D1</color>

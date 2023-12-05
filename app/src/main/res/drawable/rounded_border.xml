@@ -1,0 +1,7 @@
+<!-- rounded_border.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFFF" /> <!-- Background color -->
+    <corners android:radius="100dp" /> <!-- Border radius -->
+    <stroke
+        android:color="@color/black" android:width="2dp"/> <!-- Border width -->
+</shape>
