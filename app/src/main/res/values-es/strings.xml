@@ -1,0 +1,79 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">MR2</string>
+    <string name="tab_all">Notas</string>
+    <string name="tab_vocal">Voz</string>
+    <string name="tab_passwords">Contraseñas</string>
+    <string name="note">Nota</string>
+    <string name="note_is_empty">La nota está vacía</string>
+    <string name="save">Guardar</string>
+    <string name="note_title">Título de la nota</string>
+    <string name="title">Título</string>
+    <string name="write_a_note" tools:ignore="TypographyEllipsis">Escribe una nota...</string>
+    <string name="delete">Eliminar</string>
+    <string name="share">Compartir</string>
+    <string name="menu">Menú</string>
+    <string name="add_notes">Agregar notas</string>
+    <string name="search_notes">Buscar notas</string>
+    <string name="back">Volver</string>
+    <string name="edit">Editar</string>
+    <string name="bottom_sheet_share">Compartir</string>
+    <string name="bottom_sheet_delete">Eliminar</string>
+    <string name="custom_model_title">Eliminar una nota</string>
+    <string name="custom_model_description">¿Estás seguro de que quieres eliminar esta nota?</string>
+    <string name="custom_model_yes">Sí</string>
+    <string name="custom_model_no">No</string>
+
+    <string-array name="labels">
+        <item>Voz</item>
+        <item>Por hacer</item>
+        <item>Contraseñas</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hola fragmento en blanco</string>
+    <string name="title_activity_audio_recording">Actividad de grabación de audio</string>
+    <string name="start">Iniciar</string>
+    <string name="stop">Detener</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save_the_vocal">Guardar la grabación</string>
+    <string name="your_vocal_title">Tu título vocal...</string>
+    <string name="time">00:00</string>
+    <string name="title_activity_browser">Actividad del navegador</string>
+    <string name="navigation_drawer_open">Abrir cajón de navegación</string>
+    <string name="navigation_drawer_close">Cerrar cajón de navegación</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Encabezado de navegación</string>
+    <string name="action_settings">Configuración</string>
+
+    <string name="menu_home">Inicio</string>
+    <string name="menu_gallery">Galería</string>
+    <string name="menu_slideshow">Presentación</string>
+    <string name="title_activity_login">Actividad de inicio de sesión</string>
+    <string name="prompt_email">Correo electrónico</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_up">Registrarse</string>
+    <string name="action_sign_in">Iniciar sesión</string>
+    <string name="action_sign_in_short">Iniciar sesión</string>
+    <string name="welcome">"¡Bienvenido!"</string>
+    <string name="invalid_username">Nombre de usuario no válido</string>
+    <string name="invalid_password">La contraseña debe tener más de 5 caracteres</string>
+    <string name="login_failed">"Error al iniciar sesión"</string>
+    <string name="tag">Etiqueta</string>
+    <string name="add_new_tag">Agregar nueva etiqueta</string>
+    <string name="title_activity_signup">Actividad de registro</string>
+    <string name="title_activity_password">Actividad de contraseñas</string>
+    <string name="first_fragment_label">Primer fragmento</string>
+    <string name="second_fragment_label">Segundo fragmento</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+    <string name="password_is_empty">La contraseña está vacía</string>
+    <string name="title_activity_view_password">Actividad de visualización de contraseñas</string>
+    <string name="schedule">Programar</string>
+    <string name="schedule_this_note">Programar esta nota</string>
+    <string name="title_activity_preview_audio">Actividad de vista previa de audio</string>
+    <string name="last_edit">Última edición</string>
+    <string name="service_name">Nombre del servicio</string>
+
+    <string name="extra_notes">Notas adicionales</string>
+
+</resources>

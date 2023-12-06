@@ -18,15 +18,28 @@
         android:background="@color/background"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/colorTitle"
-        app:tabTextAppearance="@style/MyCustomTextAppearance"
-        app:tabTextColor="@color/colorGrey" />
+         app:tabTextColor="@color/colorGrey" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tabs" />
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/floatingActionButtonVocal"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="15dp"
+        android:tint="@color/floating_btn_icon"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        android:contentDescription="@string/add_notes"
+        android:src="@drawable/lock_24" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButtonVocal"
         android:layout_width="wrap_content"

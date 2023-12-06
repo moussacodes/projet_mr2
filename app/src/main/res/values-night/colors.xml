@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_accent">#FFFFFF</color>
-    <color name="background">#19191E</color>
-    <color name="colorTitle">#FFFFFF</color>
-    <color name="colorGrey">#D1D1D1</color>
-    <color name="colorBgBtn">#FFFFFF</color>
+    <color name="colorTitle">#ffffff</color>
     <color name="floating_btn">#ffffff</color>
     <color name="floating_btn_icon">#000000</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="color_accent">#ffffff</color>
+    <color name="black">#ffffff</color>
+    <color name="white">#000000</color>
+    <color name="ic_launcher_background">#3DDC84</color>
+    <color name="background">#000000</color>
+    <color name="status_bar_scrim">@color/background</color>
+    <color name="nav_bar_scrim">@color/background</color>
+    <color name="colorGrey">#2C2C2C</color>
+    <color name="colorBgBtn">#ffffff</color>
 </resources>

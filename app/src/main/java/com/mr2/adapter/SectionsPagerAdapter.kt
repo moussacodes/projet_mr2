@@ -9,13 +9,12 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.mr2.R
 import com.mr2.fragment.AllNotesFragment
 import com.mr2.fragment.VocalFragment
-import com.mr2.fragment.StudyNotesFragment
-import com.mr2.fragment.WorkNotesFragment
+import com.mr2.fragment.PasswordFragment
 
 class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     @StringRes
-    private val tabTitles = intArrayOf(R.string.tab_all, R.string.tab_personal, R.string.tab_work, R.string.tab_study)
+    private val tabTitles = intArrayOf(R.string.tab_all, R.string.tab_vocal, R.string.tab_passwords)
 
     override fun getItem(position: Int): Fragment {
         var fragment: Fragment? = null
@@ -25,9 +24,8 @@ class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
             1 -> fragment =
                 VocalFragment()
             2 -> fragment =
-                WorkNotesFragment()
-            3 -> fragment =
-                StudyNotesFragment()
+                PasswordFragment()
+
         }
         return fragment as Fragment
     }
@@ -38,6 +36,6 @@ class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
     }
 
     override fun getCount(): Int {
-        return 4
+        return 3
     }
 }

@@ -5,18 +5,19 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.mr2.dao.NoteDao
-import com.mr2.dao.TagDao
+import com.mr2.dao.PasswordDao
 import com.mr2.dao.VocalDao
 import com.mr2.entity.Note
-import com.mr2.entity.Tag
+import com.mr2.entity.Password
 import com.mr2.entity.Vocal
 
 //Database annotation to specify the entities and set version
-@Database(entities = [Note::class, Vocal::class, Tag::class], version = 3, exportSchema = false)
+@Database(entities = [Note::class, Vocal::class,  Password::class], version = 3, exportSchema = false)
 abstract class NoteRoomDatabase : RoomDatabase() {
     abstract fun getNoteDao(): NoteDao
-    abstract fun getTagDao(): TagDao
+
     abstract fun getVocalDao(): VocalDao
+    abstract fun getPasswordDao(): PasswordDao
     companion object {
         @Volatile
         private var INSTANCE: NoteRoomDatabase? = null

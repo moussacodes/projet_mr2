@@ -1,9 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">MR2</string>
     <string name="tab_all">Notes</string>
-    <string name="tab_personal">Voice</string>
-    <string name="tab_work">Todo</string>
-    <string name="tab_study">Passwords</string>
+    <string name="tab_vocal">Voice</string>
+     <string name="tab_passwords">Passwords</string>
     <string name="note">Note</string>
     <string name="note_is_empty">Note is empty</string>
     <string name="save">Save</string>
@@ -52,7 +51,8 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_up">Sign up</string>
+    <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
@@ -60,4 +60,18 @@
     <string name="login_failed">"Login failed"</string>
     <string name="tag">Tag</string>
     <string name="add_new_tag">Add new tag</string>
+    <string name="title_activity_signup">SignupActivity</string>
+    <string name="title_activity_password">PasswordActivity</string>
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="password_is_empty">Password is empty</string>
+    <string name="title_activity_view_password">ViewPasswordActivity</string>
+    <string name="schedule">Schedule</string>
+    <string name="schedule_this_note">Schedule this note</string>
+    <string name="title_activity_preview_audio">PreviewAudioActivity</string>
+    <string name="last_edit">Last edited</string>
+    <string name="service_name">Service name</string>
+    <string name="extra_notes">Extra notes</string>
 </resources>

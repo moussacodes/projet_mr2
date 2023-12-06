@@ -75,6 +75,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.floatingActionButtonVocal.setOnClickListener {
             startActivity(Intent(this, AudioRecordingActivity::class.java))
         }
+        binding.floatingActionButtonPassword.setOnClickListener {
+            startActivity(Intent(this, PasswordActivity::class.java))
+        }
 
     }
 
@@ -106,11 +109,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if(!clicked){
             findViewById<FloatingActionButton>(R.id.floatingActionButtonEdit).startAnimation(fromBottom)
             findViewById<FloatingActionButton>(R.id.floatingActionButtonVocal).startAnimation(fromBottom)
+            findViewById<FloatingActionButton>(R.id.floatingActionButtonPassword).startAnimation(fromBottom)
+
             findViewById<FloatingActionButton>(R.id.floatingActionButton).startAnimation(rotateOpen)
         }else{
             findViewById<FloatingActionButton>(R.id.floatingActionButtonEdit).startAnimation(toBottom)
             findViewById<FloatingActionButton>(R.id.floatingActionButtonVocal).startAnimation(toBottom)
+            findViewById<FloatingActionButton>(R.id.floatingActionButtonPassword).startAnimation(toBottom)
+
             findViewById<FloatingActionButton>(R.id.floatingActionButton).startAnimation(rotateClose)
+
         }
     }
 
@@ -118,9 +126,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if(!clicked){
             findViewById<FloatingActionButton>(R.id.floatingActionButtonEdit).visibility = View.VISIBLE
             findViewById<FloatingActionButton>(R.id.floatingActionButtonVocal).visibility = View.VISIBLE
+            findViewById<FloatingActionButton>(R.id.floatingActionButtonPassword).visibility = View.VISIBLE
+
         }else{
             findViewById<FloatingActionButton>(R.id.floatingActionButtonEdit).visibility = View.GONE
             findViewById<FloatingActionButton>(R.id.floatingActionButtonVocal).visibility = View.GONE
+            findViewById<FloatingActionButton>(R.id.floatingActionButtonPassword).visibility = View.GONE
+
         }
     }
 

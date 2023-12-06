@@ -44,7 +44,7 @@
             <Button
                 android:layout_marginRight="30sp"
                 android:id="@+id/cancelBtn"
-                android:layout_width="80sp"
+                android:layout_width="wrap_content"
                 android:layout_height="50sp"
                 android:textAllCaps="false"
                 android:text="@string/cancel"
@@ -52,7 +52,7 @@
             <Button
                 android:layout_marginLeft="30sp"
                 android:id="@+id/saveBtn"
-                android:layout_width="80sp"
+                android:layout_width="wrap_content"
                 android:layout_height="50sp"
                 android:backgroundTint="@color/black"
                 android:textAllCaps="false"

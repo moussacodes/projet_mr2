@@ -103,7 +103,7 @@ class AudioRecordingActivity : AppCompatActivity() {
         setContentView(binding.root)
         initViewModel()
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE),111)
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.POST_NOTIFICATIONS),111)
         }
 
 
@@ -313,7 +313,7 @@ class AudioRecordingActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode != 111 || grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if(requestCode != 111 || grantResults[0] != PackageManager.PERMISSION_GRANTED){
             startActivity(Intent(this, MainActivity::class.java))
         }
     }

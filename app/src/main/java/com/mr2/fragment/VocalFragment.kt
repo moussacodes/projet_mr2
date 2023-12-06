@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.mr2.R
 import com.mr2.activity.DetailNoteActivity
+import com.mr2.activity.PreviewAudioActivity
 import com.mr2.adapter.NoteAdapter
 import com.mr2.adapter.VocalAdapter
 import com.mr2.databinding.FragmentVocalBinding
@@ -58,32 +59,7 @@ class VocalFragment : Fragment() {
     }
      */
 
-    private fun readVocal(view: View, vocal: Vocal){
-        var btn = view.findViewById<ImageView>(R.id.play_pause_btn)
 
-        if (!isPlaying) {
-            try {
-                mPlayer!!.setDataSource(vocal.path)
-                mPlayer!!.prepare()
-                mPlayer!!.start()
-                btn.setImageResource(R.drawable.pause_24)
-                isPlaying = true
-            } catch (e: IOException) {
-                Log.e("LOG_TAG", "prepare() failed")
-            }
-
-            mPlayer!!.setOnCompletionListener(MediaPlayer.OnCompletionListener {
-                btn.setImageResource(R.drawable.play_24)
-                isPlaying = false
-                mPlayer!!.seekTo(0)
-            })
-        } else {
-            mPlayer!!.stop()
-            mPlayer!!.release()  // Release the MediaPlayer resources
-            btn.setImageResource(R.drawable.play_24)
-            isPlaying = false
-        }
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -113,7 +89,9 @@ class VocalFragment : Fragment() {
 
         listVocalAdapter.setOnClicked(object : VocalAdapter.VocalListener {
             override fun onItemClicked(vocal: Vocal) {
-                readVocal(view, vocal)
+                val intent = Intent(context, PreviewAudioActivity::class.java)
+                intent.putExtra(PreviewAudioActivity().readVocal, vocal)
+                startActivity(intent)
             }
         })
 

@@ -50,12 +50,7 @@ class DetailNoteActivity : AppCompatActivity(), View.OnClickListener {
             note = intent.getParcelableExtra(editNoteExtra)!!
             binding.tvTitle.text = note.title
             binding.tvDate.text = dateChange.changeFormatDate(note.date)
-            if(note.label.isEmpty() != true){
-                binding.noteTag.setText(note.label)
-            }
-            else{
-                binding.noteTag.visibility = View.GONE
-            }
+
 
             binding.tvBody.text = note?.body
 
