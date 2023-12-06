@@ -1,5 +1,8 @@
 package com.mr2.utils
 
+/**
+ * Stocker les access token
+ */
 
 
 import android.content.Context

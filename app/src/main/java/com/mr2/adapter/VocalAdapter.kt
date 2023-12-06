@@ -1,5 +1,9 @@
 package com.mr2.adapter
 
+/**
+ * Adapteur pour les voice notes
+ */
+
 import android.util.Log
 import com.mr2.entity.Vocal
 import android.view.LayoutInflater

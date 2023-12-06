@@ -1,5 +1,9 @@
 package com.mr2.activity
 
+/**
+ * ce fichier permet à l'utilisateur de stocker un mot de passe
+ */
+
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -70,9 +74,9 @@ class PasswordActivity : AppCompatActivity(), View.OnClickListener {
         binding.generatePassword.setOnClickListener(this)
     }
 
-    private fun deleteNote(password: Password) {
+    private fun deletePassword(password: Password) {
         passwordViewModel.deletePassword(password)
-        Toast.makeText(this@PasswordActivity, "Password removed", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@PasswordActivity, "Mot de passe supprimé", Toast.LENGTH_SHORT).show()
     }
 
 
@@ -102,7 +106,6 @@ class PasswordActivity : AppCompatActivity(), View.OnClickListener {
 
             }
             R.id.btn_save -> {
-                Log.d("clicked", "it's being clicked")
                 val title = binding.serviceName.text.toString()
                 val email = binding.emailInput.text.toString()
                 val passwordContent = binding.password.text.toString()
@@ -111,7 +114,7 @@ class PasswordActivity : AppCompatActivity(), View.OnClickListener {
                 val time = dateChange.getTime()
 
                 if (title.isEmpty() || passwordContent.isEmpty()) {
-                    Toast.makeText(this@PasswordActivity, "Password cannot be empty", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@PasswordActivity, "Mot de passe ne peut pas être vide", Toast.LENGTH_SHORT)
                         .show()
                 } else {
                     if (isUpdate) {
@@ -137,7 +140,7 @@ class PasswordActivity : AppCompatActivity(), View.OnClickListener {
                         )
                     }
 
-                    Toast.makeText(this@PasswordActivity, "Password saved", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@PasswordActivity, "Mot de passe sauvgardé", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)

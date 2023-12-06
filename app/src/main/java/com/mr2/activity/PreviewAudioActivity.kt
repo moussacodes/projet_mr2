@@ -1,5 +1,9 @@
 package com.mr2.activity
 
+/**
+ * ce fichier permet à l'utilisateur d'écouter une note vocal
+ */
+
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Bundle
@@ -77,8 +81,7 @@ class PreviewAudioActivity : ComponentActivity(){
         }
 
         mPlayer = null
-        //showing the play button
-        binding.imgViewPlay.setImageResource(R.drawable.play_24)
+         binding.imgViewPlay.setImageResource(R.drawable.play_24)
         binding.chronometer.stop()
     }
     private fun startPlaying() {
@@ -88,11 +91,9 @@ class PreviewAudioActivity : ComponentActivity(){
             mPlayer!!.prepare()
             mPlayer!!.start()
         } catch (e: IOException) {
-            Log.e("LOG_TAG", "prepare() failed")
-        }
+         }
 
-        //making the imageView pause button
-        binding.imgViewPlay.setImageResource(R.drawable.pause_24)
+         binding.imgViewPlay.setImageResource(R.drawable.pause_24)
 
         binding.seekBar.progress = lastProgress
         mPlayer!!.seekTo(lastProgress)

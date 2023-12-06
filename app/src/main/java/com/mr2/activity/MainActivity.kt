@@ -1,5 +1,8 @@
 package com.mr2.activity
 
+/**
+ * ce fichier permet à l'utilisateur de visualiser le contenu de l'application
+ */
 
 import android.app.Activity
 import android.content.Intent
@@ -53,8 +56,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     this,
                     999
                 )
-            } else {
-                // TODO: do something in here if update not available
             }
         }
 
@@ -93,8 +94,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
             R.id.floatingActionButton -> {
-                //startActivity(Intent(this, EditActivity::class.java))
-                onAddButtonClicked()
+                 onAddButtonClicked()
             }
         }
     }
@@ -152,24 +152,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onResume()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 999 && resultCode == Activity.RESULT_OK) {
-            // TODO: do something in here if in-app updates success
-        } else {
-            // TODO: do something in here if in-app updates failure
-        }
-    }
 
 
-    /*private fun replaceFragment(fragment: Fragment, isTransition: Boolean?) {
 
-        val fragmentTransition = supportFragmentManager.beginTransaction()
 
-        if (isTransition == true) {
-            fragmentTransition.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-        }
-        fragmentTransition.replace(R.id.flFragmenet, fragment)
-        fragmentTransition.commit()
-    }*/
 }

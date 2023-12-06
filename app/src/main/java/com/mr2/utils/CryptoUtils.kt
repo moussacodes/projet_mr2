@@ -1,5 +1,8 @@
 package com.mr2.utils
 
+/**
+ * Util pour encrypter les access token reçu du serveur
+ */
 
 
 import android.content.Context

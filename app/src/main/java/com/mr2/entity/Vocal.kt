@@ -6,10 +6,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
-//Entity annotation to specify the table's name
-@Entity(tableName = "vocals")
-//Parcelable annotation to make parcelable object
-@Parcelize
+ @Entity(tableName = "vocals")
+ @Parcelize
 data class Vocal(
     //PrimaryKey annotation to declare primary key with auto increment value
     //ColumnInfo annotation to specify the column's name

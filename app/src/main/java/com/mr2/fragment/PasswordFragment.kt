@@ -1,5 +1,10 @@
 package com.mr2.fragment
 
+/**
+ * Fragment pour afficher les mots de passe
+ */
+
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater

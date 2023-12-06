@@ -1,5 +1,9 @@
 package com.mr2.activity
 
+/**
+ * ce fichier permet à l'utilisateur de consulter un mot de passe
+ */
+
 import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -173,7 +177,7 @@ class ViewPasswordActivity : ComponentActivity(), View.OnClickListener {
             }
             R.id.cl_delete -> {
                 //showDialog()
-                showCustomDialogBox("Delete this note", "Are you sure you want to delete this note")
+                showCustomDialogBox(R.string.delete_note.toString(), R.string.delete_note_confirmation.toString())
             }
             R.id.cl_share -> {
                 val sendIntent: Intent = Intent().apply {

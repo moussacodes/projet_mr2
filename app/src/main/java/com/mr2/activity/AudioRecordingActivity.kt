@@ -1,6 +1,10 @@
 package com.mr2.activity
 
 
+/**
+ * ce fichier permet à l'utilisateur d'enregistrer une voice note
+ */
+
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
@@ -81,16 +85,6 @@ class AudioRecordingActivity : AppCompatActivity() {
                 stopRecording()
             }
 
-            /*R.id.imgViewPlay -> {
-                if (!isPlaying && fileName != null) {
-                    isPlaying = true
-                    startPlaying()
-                } else {
-                    isPlaying = false
-                    stopPlaying()
-                }
-            }*/
-
         }
     }
     private fun initViewModel() {
@@ -136,8 +130,7 @@ class AudioRecordingActivity : AppCompatActivity() {
         }
 
         mPlayer = null
-        //showing the play button
-        binding.imgViewPlay.setImageResource(R.drawable.play_24)
+         binding.imgViewPlay.setImageResource(R.drawable.play_24)
         binding.chronometer.stop()
     }
     private fun startPlaying() {
@@ -147,11 +140,10 @@ class AudioRecordingActivity : AppCompatActivity() {
             mPlayer!!.prepare()
             mPlayer!!.start()
         } catch (e: IOException) {
-            Log.e("LOG_TAG", "prepare() failed")
+
         }
 
-        //making the imageView pause button
-        binding.imgViewPlay.setImageResource(R.drawable.pause_24)
+         binding.imgViewPlay.setImageResource(R.drawable.pause_24)
 
         binding.seekBar.progress = lastProgress
         mPlayer!!.seekTo(lastProgress)
@@ -204,7 +196,7 @@ class AudioRecordingActivity : AppCompatActivity() {
         mRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
         mRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
         mRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-        mRecorder!!.setAudioEncodingBitRate(128000) // Adjust the bit rate as needed
+        mRecorder!!.setAudioEncodingBitRate(128000)
         mRecorder!!.setAudioSamplingRate(44100)
         mRecorder!!.setOutputFile(recordingFilePath)
 
@@ -219,8 +211,7 @@ class AudioRecordingActivity : AppCompatActivity() {
         lastProgress = 0
         binding.seekBar.progress = 0
         stopPlaying()
-        // making the imageView a stop button starting the chronometer
-        binding.chronometer.base = SystemClock.elapsedRealtime()
+         binding.chronometer.base = SystemClock.elapsedRealtime()
         binding.chronometer.start()
     }
 
@@ -238,7 +229,6 @@ class AudioRecordingActivity : AppCompatActivity() {
         val time = dateChange.getTime()
 
 
-        //vocalViewModel.insertVocal()
 
 
         saveBtn.setOnClickListener {
@@ -277,8 +267,7 @@ class AudioRecordingActivity : AppCompatActivity() {
         mRecorder = null
         // Stopping the chronometer
 
-        // Showing the play button
-        Toast.makeText(this, "Recording saved successfully.", Toast.LENGTH_SHORT).show()
+         Toast.makeText(this, R.string.recording_saved, Toast.LENGTH_SHORT).show()
     }
 
 
@@ -294,8 +283,7 @@ class AudioRecordingActivity : AppCompatActivity() {
         mHandler.postDelayed(runnable, 100)
     }
     private fun getPermissionToRecordAudio() {
-        // 1) Use the support library version ContextCompat.checkSelfPermission(...) to avoid checking the build version since Context.checkSelfPermission(...) is only available in Marshmallow
-        // 2) Always check for permission (even if permission has already been granted) since the user can revoke permissions at any time through Settings
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf( Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE), RECORD_AUDIO_REQUEST_CODE)
@@ -306,7 +294,6 @@ class AudioRecordingActivity : AppCompatActivity() {
 
 
 
-    // Callback with the request from calling requestPermissions(...)
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

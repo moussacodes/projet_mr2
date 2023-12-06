@@ -1,5 +1,9 @@
 package com.mr2.adapter
 
+/**
+ * Adapteur pour les notes
+ */
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

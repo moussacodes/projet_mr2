@@ -74,4 +74,10 @@
     <string name="last_edit">Last edited</string>
     <string name="service_name">Service name</string>
     <string name="extra_notes">Extra notes</string>
+    <string name="recording_saved">Recording saved successfully.</string>
+    <string name="note_removed">Note removed</string>
+    <string name="notification_schedule">Notification Scheduled</string>
+    <string name="empty_note_warning">Note cannot be empty</string>
+    <string name="delete_note">Delete this note</string>
+    <string name="delete_note_confirmation">Are you sure you want to delete this note</string>
 </resources>

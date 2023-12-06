@@ -31,8 +31,8 @@ abstract class NoteRoomDatabase : RoomDatabase() {
                     NoteRoomDatabase::class.java,
                     "note_db"
                 )
-                    .allowMainThreadQueries() //allows Room to executing task in main thread
-                    .fallbackToDestructiveMigration() //allows Room to recreate database if no migrations found
+                    .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration() //permet à room de recréer la bdd si une migration est trouvé
                     .build()
                 INSTANCE = instance
                 instance

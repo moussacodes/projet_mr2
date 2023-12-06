@@ -1,5 +1,11 @@
 package com.mr2.activity
 
+
+/**
+ * ce fichier permet à l'utilisateur de créer un compte
+ */
+
+
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -58,14 +64,12 @@ class SignupActivity : ComponentActivity() {
                     }
 
                     override fun onFailure(call: Call<Void>, t: Throwable) {
-                        // Handle failure
-                    }
+                     }
                 })
             }
 
 
-            //startActivity(Intent(this, EditActivity::class.java))
-        }
+         }
 
     }
 

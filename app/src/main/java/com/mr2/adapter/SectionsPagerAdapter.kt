@@ -1,5 +1,9 @@
 package com.mr2.adapter
 
+/**
+ * Adapteur pour les tabs
+ */
+
 import android.content.Context
 import androidx.annotation.Nullable
 import androidx.annotation.StringRes

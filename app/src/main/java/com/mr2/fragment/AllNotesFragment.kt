@@ -1,5 +1,10 @@
 package com.mr2.fragment
 
+/**
+ * Fragment pour afficher les notes
+ */
+
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -80,7 +85,6 @@ class AllNotesFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        //update list
-        initListener()
+         initListener()
     }
 }

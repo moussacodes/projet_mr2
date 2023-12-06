@@ -2,6 +2,11 @@
 
 package com.mr2.adapter
 
+
+/**
+ * Adapteur pour les mots de passe
+ */
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

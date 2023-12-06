@@ -1,5 +1,9 @@
 package com.mr2.activity
 
+/**
+ * ce fichier permet à l'utilisateur de créer ou modifier une note
+ */
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlarmManager
@@ -40,6 +44,8 @@ import com.mr2.utils.titleExtra
 import com.mr2.viewModel.NotesViewModel
 import java.util.Calendar
 import java.util.Date
+
+
 
 
 class EditActivity : AppCompatActivity(), View.OnClickListener {
@@ -95,7 +101,7 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun deleteNote(note: Note) {
         notesViewModel.deleteNote(note)
-        Toast.makeText(this@EditActivity, "Note removed", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@EditActivity, R.string.note_removed, Toast.LENGTH_SHORT).show()
     }
 
 
@@ -129,7 +135,7 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
         val timeFormat = android.text.format.DateFormat.getTimeFormat(applicationContext)
 
         AlertDialog.Builder(this)
-            .setTitle("Notification Scheduled")
+            .setTitle(R.string.notification_schedule)
             .setMessage(
                 "Title: " + title +
                         "\nMessage: " + message +
@@ -176,7 +182,7 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
 
 
                 if (title.isEmpty() && body.isEmpty()) {
-                    Toast.makeText(this@EditActivity, "Note cannot be empty", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@EditActivity, R.string.empty_note_warning, Toast.LENGTH_SHORT)
                         .show()
                 } else {
 
@@ -204,7 +210,7 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
                         )
                     }
 
-                    Toast.makeText(this@EditActivity, "Note saved", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@EditActivity, "Note sauvgardé", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
@@ -226,8 +232,6 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
                 arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
                 NOTIFICATION_PERMISSION_REQUEST_CODE
             )
-        } else {
-            // Permission is already granted, you can proceed with sending notifications
         }
     }
     override fun onRequestPermissionsResult(
@@ -237,10 +241,9 @@ class EditActivity : AppCompatActivity(), View.OnClickListener {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == NOTIFICATION_PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, you can proceed with sending notifications
-            } else {
-                // Permission denied, handle accordingly
+            if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                var intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             }
         }
     }

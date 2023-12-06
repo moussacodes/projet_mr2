@@ -1,5 +1,11 @@
 package com.mr2.activity
 
+
+/**
+ * ce fichier permet à l'utilisateur de chercher une note
+ */
+
+
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle

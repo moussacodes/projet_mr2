@@ -1,5 +1,9 @@
 package com.mr2.api
 
+/**
+ * Initialise retrofit
+ */
+
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

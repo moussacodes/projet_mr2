@@ -1,5 +1,10 @@
 package com.mr2.activity
 
+
+/**
+ * ce fichier permet à l'utilisateur de se connecter
+ */
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import com.mr2.databinding.ActivityLoginBinding

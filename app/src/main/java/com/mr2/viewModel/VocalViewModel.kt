@@ -29,12 +29,6 @@ class VocalViewModel(application: Application) : AndroidViewModel(application) {
         listVocals.postValue(listItems)
     }
 
-    /*fun setNotesByLabel(label: String) {
-        val listItems = arrayListOf<Vocal>()
-
-        listItems.addAll(dao.getByLabel(label))
-        listVocals.postValue(listItems)
-    }*/
 
     fun setVocalsByTitle(title: String) {
         val listItems = arrayListOf<Vocal>()

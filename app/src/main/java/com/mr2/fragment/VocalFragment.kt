@@ -1,5 +1,9 @@
 package com.mr2.fragment
 
+/**
+ * Fragment pour afficher les voice notes
+ */
+
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -36,28 +40,6 @@ class VocalFragment : Fragment() {
     private var mPlayer: MediaPlayer? = MediaPlayer()
 
 
-    /* all recordings
-        private fun getAllRecordings() {
-        val recordArrayList = ArrayList<Recording>()
-        val root = android.os.Environment.getExternalStorageDirectory()
-        val path = root.absolutePath + "/AndroidCodility/Audios"
-        val directory = File(path)
-        val files = directory.listFiles()
-        if (files != null) {
-
-            for (i in files.indices) {
-                val fileName = files[i].name
-                val recordingUri = root.absolutePath + "/AndroidCodility/Audios/" + fileName
-                recordArrayList.add(Recording(recordingUri, fileName, false))
-            }
-            tvNoData.visibility = View.GONE
-            recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            myAdapter = MyAdapter(recordArrayList)
-            myAdapter!!.setListener(this)
-            recyclerView.adapter = myAdapter
-        }
-    }
-     */
 
 
     override fun onCreateView(

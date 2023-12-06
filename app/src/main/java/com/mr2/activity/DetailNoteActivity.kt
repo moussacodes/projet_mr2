@@ -1,5 +1,9 @@
 package com.mr2.activity
 
+/**
+ * ce fichier permet à l'utilisateur de consulter, supprimer une note
+ */
+
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
